@@ -163,12 +163,12 @@
 				}
 				
 				// define new parseBindingsString()
-				ko.bindingProvider.prototype.parseBindingsString = function(bindingsString, bindingContext) {
+				ko.bindingProvider.prototype.parseBindingsString = function() {
 					try {
-						return thiz._parseBindingsString(bindingsString, bindingContext);
+						return thiz._parseBindingsString.apply(this, arguments );
 					}
 					catch (e) {
-						console.log( "bindingSelector module force to ignore unmatched exception.")
+						console.log( "ignore unmatched exception by enableException:false.")
 					}
 				};
 			}
