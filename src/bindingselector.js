@@ -154,11 +154,11 @@
 			return false;
 		};
 		
-		// cwdoh; if v is true, KO will ignore unmatched binding exception.
+		// cwdoh; if v is false, KO will ignore unmatched binding exception.
 		thiz.enableException = function( v ) {
-			if ( v ) {
+			if ( !v ) {
 				// save original parseBindingsString()
-				if ( thiz._parseBindingsString ) {
+				if ( !thiz._parseBindingsString ) {
 					thiz._parseBindingsString = ko.bindingProvider.prototype.parseBindingsString;
 				}
 				
@@ -168,6 +168,7 @@
 						return thiz._parseBindingsString(bindingsString, bindingContext);
 					}
 					catch (e) {
+						console.log( "bindingSelector module force to ignore unmatched exception.")
 					}
 				};
 			}
