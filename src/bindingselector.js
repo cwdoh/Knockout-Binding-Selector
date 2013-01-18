@@ -52,7 +52,7 @@
 							
 							// if callback exists- 'init' or 'update', call it.
 							if ( callback in handler )
-								handler[callback].apply( null, params );
+								return handler[callback].apply( null, params );
 						
 							return;
 						}
@@ -61,22 +61,24 @@
 				
 				// if no handler, call default handler
 				if ( callback in defaultHandler )
-					defaultHandler[callback].apply( null, params );
+					return defaultHandler[callback].apply( null, params );
 			};
 			
-			return {
+			var returnHandler = {
 				"init": function() {
 					var params = Array.prototype.slice.call(arguments);
+					params.push( defaultHandler );
 					params.push("init");
 					
-					applyBinding.apply(null, params);
+					return applyBinding.apply(null, params);
 				},
 				
 				"update": function() {
 					var params = Array.prototype.slice.call(arguments);
+					params.push( defaultHandler );
 					params.push("update");
 				
-					applyBinding.apply(null, params);
+					return applyBinding.apply(null, params);
 				},
 				
 				"add": function( handler, condition ) {
@@ -87,9 +89,18 @@
 					else {
 						// set default handler
 						defaultHandler = handler;
+						
+						// copy properties except 'init', 'update'
+						for ( key in defaultHandler ) {
+							if ( !(key in returnHandler) ) {
+								returnHandler[key] = defaultHandler[key];
+							}
+						}
 					}
 				}
 			};
+			
+			return returnHandler;
 		};
 		
 		// add binding
@@ -181,4 +192,3 @@
 	// export symbol
 	ko.bindingSelector = new _BindingSelectorModule();
 })();
-
