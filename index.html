@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Knockout-binding-selector by cwdoh</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Knockout-binding-selector</h1>
+        <p>Enabler module of binding-overloading from Knockout.js.</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/cwdoh/Knockout-Binding-Selector" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/cwdoh/Knockout-Binding-Selector/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/cwdoh/Knockout-Binding-Selector/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>KO Binding Selector - Knockout.js plugin</h1>
+
+<p>This module makes to enable binding-overloading from Knockout.js.
+Selector plugin provides selector of binding by custom-condition.</p>
+
+<h2>Description</h2>
+
+<ul>
+<li>License: MIT license - <a href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a>
+</li>
+<li>Source - <a href="http://www.github.com/cwdoh/Knockout-Binding-Selector">http://www.github.com/cwdoh/Knockout-Binding-Selector</a>
+</li>
+<li>Author : Changwook Doh - <a href="mailto:changwook.doh@gmail.com">changwook.doh@gmail.com</a>
+</li>
+</ul><h2>Requirements</h2>
+
+<p>This module needs Knockout JavaScript library (c) Steven Sanderson - <a href="http://knockoutjs.com/">http://knockoutjs.com/</a></p>
+
+<h2>CAUTION</h2>
+
+<ul>
+<li>this code should be loaded after knockout.js. so, insert this script after knockout.js included.</li>
+<li>if you don't set condition, default binding handler will be changed to new one.</li>
+<li>if there's exist matched binding handler and no matched function called, handler-call will be ignored.</li>
+</ul><h2>Binding-Selector?</h2>
+
+<p>For example if you want to bind your data with jQuery Mobile Widget and it has same api name as KO's built-in binding name.
+Sure, you can solve it by changing a name of Widget's binding or override built-ins to new bindings.</p>
+
+<p>But if you give new binding names for your custom bindings,
+it will cause to conflict for that you descript binding when writing binding actions in html code.</p>
+
+<p>if you decide to override bindings instead of built-ins, It will works fine.
+but you can't use built-ins even if you want to use it.</p>
+
+<p>Selector plugin makes to enable adding bindings and its executable condition under same name.
+When KO meets binding syntax, selector try to find a binding has matched condition and executes it.</p>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/cwdoh">cwdoh</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
