@@ -44,23 +44,7 @@
 <p>This module makes to enable binding-overloading from Knockout.js.
 Selector plugin provides selector of binding by custom-condition.</p>
 
-<h2>Description</h2>
-
-<ul>
-<li>License: MIT license - <a href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a>
-</li>
-<li>Author : Chang W. Doh</li>
-</ul><h2>Requirements</h2>
-
-<p>This module needs Knockout JavaScript library (c) Steven Sanderson - <a href="http://knockoutjs.com/">http://knockoutjs.com/</a></p>
-
-<h2>Usage</h2>
-
-<ul>
-<li>this code should be loaded after knockout.js. so, insert this script after knockout.js included.</li>
-<li>if you don't set condition, default binding handler will be changed to new one.</li>
-<li>if there's exist matched binding handler and no matched function called, handler-call will be ignored.</li>
-</ul><h2>Binding-Selector?</h2>
+<h2>Binding-Selector?</h2>
 
 <p>For example if you want to bind your data with jQuery Mobile Widget and it has same api name as KO's built-in binding name.
 Sure, you can solve it by changing a name of Widget's binding or override built-ins to new bindings.</p>
@@ -74,23 +58,177 @@ but you can't use built-ins even if you want to use it.</p>
 <p>Selector plugin makes to enable adding bindings and its executable condition under same name.
 When KO meets binding syntax, selector try to find a binding has matched condition and executes it.</p>
 
-<p>DISCUSSION</p>
-<!-- start of disqus -->
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  var disqus_shortname = 'cwdoh';
+<h2>Dependency</h2>
 
-  (function() {
-		var disqus_category_id = '2393299';
-		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-	})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-<!-- end of disqus -->
+<p>Binding-Selector requires Knockout JavaScript library (c) Steven Sanderson - <a href="http://knockoutjs.com/">http://knockoutjs.com/</a></p>
 
+<h2>Usage</h2>
+
+<h3>Scripts order</h3>
+
+<p>this code should be loaded after knockout.js. so, insert this script after knockout.js included.</p>
+
+<p></p>
+
+<h3>Adding custom binding with binding selector</h3>
+
+<pre><code>// sample binding overloading : check node type &amp; alert
+ko.bindingSelector.add(
+    "text",
+    {
+        "update": function (element, valueAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor() || {});
+            element.innerText = value + ": THIS is SPAN TAG";
+        }
+    },
+    function( element ) {
+        if ( element.tagName == "SPAN" )
+            return true;
+    }
+);
+
+ko.bindingSelector.add(
+    "text",
+    {
+        "update": function (element, valueAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor() || {});
+            element.innerText = value + ": THIS is DIV TAG";
+        }
+    },
+    function( element ) {
+        if ( element.tagName == "DIV" )
+            return true;
+    }
+);
+</code></pre>
+
+<h3>Setting or changing default.</h3>
+
+<p>When using ko.bindingSelector.add() and there is no condition, default binding handler will be changed to new one.</p>
+
+<pre><code>ko.bindingSelector.add(
+    "text",
+    {
+        "update": function (element, valueAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor() || {});
+            element.innerText = value + ": THIS binding will be default binding.";
+        }
+    }
+);
+</code></pre>
+
+<h2>Basic Example</h2>
+
+<p>Adding 2 custom 'text' bindings that have different behavior by its element type.</p>
+
+<h3>HTML</h3>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"&gt;
+        &lt;title&gt;Binding Selector Sample&lt;/title&gt;
+        &lt;script type="text/javascript" src="./knockout-latest.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="../src/bindingselector.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="./main.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body id="root" onLoad="onLoad()"&gt;
+        &lt;span data-bind="text: message"&gt;&lt;/span&gt;
+        &lt;div data-bind="text: message"&gt;&lt;/div&gt;
+        &lt;p data-bind="text: message"&gt;&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h3>Javascript</h3>
+
+<pre><code>// sample binding overloading : check node type &amp; alert
+ko.bindingSelector.add(
+    "text",
+    {
+        "update": function (element, valueAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor() || {});
+            element.innerText = value + ": THIS is SPAN TAG";
+        }
+    },
+    function( element ) {
+        if ( element.tagName == "SPAN" )
+            return true;
+        return false;
+    }
+);
+
+ko.bindingSelector.add(
+    "text",
+    {
+        "update": function (element, valueAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor() || {});
+            element.innerText = value + ": THIS is DIV TAG";
+        }
+    },
+    function( element ) {
+        if ( element.tagName == "DIV" )
+            return true;
+        return false;
+    }
+);
+
+function onLoad()
+{
+    var viewModel = {
+        message: "Hello, bindings"
+    };
+
+    ko.applyBindings( viewModel );
+}
+</code></pre>
+
+<h2>No default handler</h2>
+
+<p>When binding is called and can not find matched condition, binding will be ignored.</p>
+
+<pre><code>// add currency binding for 'kr-won'
+ko.bindingSelector.add(
+    "currency",
+    {
+        "update": function (element, valueAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor() || {});
+            element.innerText = value + ": THIS binding will be default binding.";
+        }
+    },
+    function( element ) {
+        if ( element.unit =- "won" )  // kr
+        return true;
+    }
+);
+
+// add currency binding for 'us-dollar'
+ko.bindingSelector.add(
+    "currency",
+    {
+        "update": function (element, valueAccessor) {
+            var value = ko.utils.unwrapObservable(valueAccessor() || {});
+            element.innerText = value + ": THIS binding will be default binding.";
+        }
+    },
+    function( element ) {
+        if ( element.unit =- "dollars" )  // us
+            return true;
+    }
+);
+
+// binding selector can not find a binding has matched condition.
+// so, binding will be ignored.
+&lt;span data-bind="currency: amounts" unit="$"&gt;&lt;/span&gt;
+</code></pre>
+
+<h2>License</h2>
+
+<ul>
+<li>MIT - <a href="http://www.opensource.org/licenses/mit-license.php">http://www.opensource.org/licenses/mit-license.php</a>
+</li>
+</ul><h2>DISCUSSION</h2>
       </section>
       <footer>
         <p>Project maintained by <a href="https://github.com/cwdoh">cwdoh</a></p>
