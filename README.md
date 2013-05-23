@@ -1,8 +1,6 @@
 KO Binding Selector - Knockout.js plugin
 ======
 
-* Author : Chang W. Doh
-
 This module makes to enable binding-overloading from Knockout.js.
 Selector plugin provides selector of binding by custom-condition.
 
