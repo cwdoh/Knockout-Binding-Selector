@@ -153,7 +153,7 @@ When binding is called and can not find matched condition, binding will be ignor
 		{
 			"update": function (element, valueAccessor) {
 				var value = ko.utils.unwrapObservable(valueAccessor() || {});
-				element.innerText = value + ": THIS binding will be default binding.";
+				element.innerText = "￦" + value;
 			}
 		},
 		function( element ) {
@@ -168,7 +168,7 @@ When binding is called and can not find matched condition, binding will be ignor
 		{
 			"update": function (element, valueAccessor) {
 				var value = ko.utils.unwrapObservable(valueAccessor() || {});
-				element.innerText = value + ": THIS binding will be default binding.";
+				element.innerText = '$' + value;
 			}
 		},
 		function( element ) {
